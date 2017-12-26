@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<style type="text/css">
+body{
+ background-color: white;
+}
+#MaxInfo{
+	color: green;
+}
+#MinInfo{
+	color: green;
+}
+.info{
+	text-align: center;
+	color:#1279CA;
+}
+.inc{
+	color: green;
+	text-align: center;
+}
+.dec{
+	color: red;
+	text-align: center;
+}
+</style>
+</head>
+<body onload="bitcoinPrice()">
+
+
+<div class="container-fluid">
+	<div class="row" style="margin-top:125px;">
+		<div class="col-xs-4"></div>
+		<div class="col-xs-4" id="input">
+		<strong>
+			<p style="text-align: center; color:green;" id="currentPrice">
+
+			</p>
+		</strong>
+			<script type="text/javascript">
+			function bitcoinPrice(){
+				$.getJSON('https://api.coinbase.com/v2/prices/spot?currency=USD', function(currentPrice){
+					var str = JSON.stringify(currentPrice.data.amount);
+					var bitPrice = document.getElementById("currentPrice");
+					bitPrice.innerHTML = "Current Price of Bitcoin is $" + str.substring(1,str.length -1); 
+				});
+			}
+			</script>
+		</div>
+		<div class="col-xs-4"></div>
+	</div>
+		
+		<strong><p style="text-align: center;">
+			Enter the date interval in which you would like to see a graph of bitcoin prices 	
+		</p></strong>
+		<br>
+			<div class="row">
+				<div class="col-xs-6">
+					<input class="center-block" id="StartDate" type="date" min="2010-07-17"style="text-align: center;">
+				</div>
+				<div class="col-xs-6">
+					<input class="center-block" id="EndDate" type="date" name="EndDate" style="text-align: center;">
+				</div>
+			</div>
+			<br>
+			<button class="btn btn-success center-block" onclick="revealGraph($('#StartDate').val(),$('#EndDate').val())">Reveal Graph</button>
+			<br>
+			<div class="row">
+				<div class="col-md-3">
+					<button class="btn btn-warning center-block" onclick="pastMonth()">past month</button>
+				</div>
+				<div class="col-md-3">
+					<button class="btn btn-warning center-block" onclick="past3Months()">past 3 months</button>
+				</div>
+				<div class="col-md-3">
+					<button class="btn btn-warning center-block" onclick="past6Months()">past 6 months</button>
+				</div>
+				<div class="col-md-3">
+					<button class="btn btn-warning center-block" onclick="pastYear()">past year</button>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="center-block">
+					<p style="border-bottom:solid black 1px; text-align: center;">
+						Interval Stats	
+					</p>
+				</div>
+			</div>
+			<br>
+			<p id="startPrice"></p>
+			<p id="endPrice"></p>
+			<p id="MaxInfo"></p>
+			<p id="MinInfo"></p>
+			<p id="percent"></p>
+		</div>
+		<div class="col-xs-4"></div>
+		
+	</div>
+  <div id="PriceGraph"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <script src="PriceInfo.js">
+
+  </script>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
